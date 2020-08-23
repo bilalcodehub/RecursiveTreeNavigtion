@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.9.14" id="browseEmployeesPageDef"
+                Package="fragments">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="EmployeeVO1" RangeSize="25" DataControl="HRAMDataControl" id="EmployeeVO1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="EmployeeVO1Iterator" id="ForemanagerId">
+      <AttrNames>
+        <Item Value="ForemanagerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EmployeeVO1Iterator" id="ForemanagerName">
+      <AttrNames>
+        <Item Value="ForemanagerName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EmployeeVO1Iterator" id="ManagerName">
+      <AttrNames>
+        <Item Value="ManagerName"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="EmployeeVO1Iterator" id="EmployeeVO1">
+      <nodeDefinition DefName="rectreenav.bc.uiviews.EmployeeVO" Name="EmployeeVO10">
+        <AttrNames>
+          <Item Value="FirstName"/>
+          <Item Value="HasChildren"/>
+          <Item Value="EmployeeId"/>
+          <Item Value="ForemanagerId"/>
+          <Item Value="ForemanagerName"/>
+          <Item Value="ManagerId"/>
+          <Item Value="ManagerName"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="EmployeeVO1Iterator" id="GetSubordinatesForSelectedManager" InstanceName="HRAMDataControl.EmployeeVO1"
+            DataControl="HRAMDataControl" RequiresUpdateModel="true" Action="executeWithParams">
+      <NamedData NDName="ParamManagerId" NDType="java.math.BigDecimal"/>
+    </action>
+  </bindings>
+</pageDefinition>

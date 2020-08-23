@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <af:pageTemplate viewId="/oracle/templates/tabletFirstTemplate.jspx" id="pt1">
+        <f:facet name="header"/>
+        <f:facet name="status"/>
+        <f:facet name="appNav"/>
+        <f:facet name="globalLinks"/>
+        <f:facet name="footer"/>
+        <f:facet name="center"/>
+        <f:facet name="start">
+            <af:deck id="d1" displayedChild="pgl5" binding="#{uiHelper.animationDeck}">
+                <af:panelGroupLayout id="pgl5" layout="vertical">
+                    <af:panelGroupLayout id="pgl3" inlineStyle="background-color:white; margin-top:5px;"
+                                         layout="vertical">
+                        <af:button text="#{bindings.ForemanagerName.inputValue}" id="b5"
+                                   styleClass="AFNavbarButton AFStretchWidth"
+                                   inlineStyle="height:50px; background-color:white; padding:15px; background-image:none; border:none"
+                                   icon="#{bindings.ForemanagerName.inputValue eq null ? '' : '/images/shuttle_left.png'}"
+                                   actionListener="#{uiHelper.onBackNavigationAction}">
+                            <f:attribute name="ManagerId" value="#{bindings.ForemanagerId.inputValue}"/>
+                        </af:button>
+                        <af:panelStretchLayout id="psl1">
+                            <f:facet name="center">
+                                <af:panelGroupLayout id="pgl4" layout="vertical"
+                                                     inlineStyle="padding: 15px; background-color: #E1E2E2 ;">
+                                    <af:outputFormatted value="#{bindings.ManagerName.inputValue}" id="of1"
+                                                        inlineStyle="font-weight:bolder; font-size:small;"/>
+                                </af:panelGroupLayout>
+                            </f:facet>
+                        </af:panelStretchLayout>
+                    </af:panelGroupLayout>
+                    <af:listView value="#{bindings.EmployeeVO1.collectionModel}" var="item" selection="single"
+                                 emptyText="#{bindings.EmployeeVO1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                 fetchSize="#{bindings.EmployeeVO1.rangeSize}" id="lv1"
+                                 binding="#{uiHelper.empsListView}"
+                                 selectionListener="#{uiHelper.onEmployeesRowSelection}">
+                        <af:listItem id="li1">
+                            <af:panelGridLayout id="pgl1">
+                                <af:gridRow marginTop="5px" height="100%" marginBottom="5px" id="gr1">
+                                    <af:gridCell marginStart="5px" width="90%" id="gc1">
+                                        <af:outputFormatted value="#{item.bindings.FirstName.inputValue}" id="of2"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginStart="5px" width="10%" marginEnd="5px" id="gc2">
+                                        <af:image source="#{item.bindings.HasChildren.inputValue eq 'Y' ? 'images/shuttle_right.png' : ''}" id="i2"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                            </af:panelGridLayout>
+                        </af:listItem>
+                    </af:listView>
+                </af:panelGroupLayout>
+                <af:transition triggerType="replace" transition="#{pageFlowScope.transition eq null ? 'slideRight' : pageFlowScope.transition}"/>
+            </af:deck>
+        </f:facet>
+        <f:facet name="end"/>
+        <f:attribute name="endWidth" value="0px"/>
+        <f:attribute name="startWidth" value="200px"/>
+    </af:pageTemplate>
+</ui:composition>
