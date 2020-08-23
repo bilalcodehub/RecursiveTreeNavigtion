@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="EmployeeVO"
+  Version="12.2.1.9.14"
+  InheritPersonalization="merge"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="rectreenav.bc.uiviews.EmployeeVO_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="ParamManagerId"
+    Kind="where"
+    Type="java.math.BigDecimal"/>
+  <SQLQuery><![CDATA[WITH emps AS (
+    SELECT employee_id, first_name, manager_id, DECODE(CONNECT_BY_ISLEAF, 0, 'Y', 'N') has_children
+    FROM employees
+    START WITH manager_id IS NULL
+    CONNECT BY PRIOR employee_id = manager_id )
+SELECT c.employee_id, 
+       c.first_name,
+       p.employee_id manager_id, 
+       p.first_name manager_name,
+       p.manager_id foremanager_id, 
+      (SELECT first_name FROM employees WHERE employee_id = p.manager_id) foremanager_name, 
+       c.has_children
+FROM emps c JOIN emps p ON (c.manager_id = p.employee_id)
+WHERE c.manager_id = :ParamManagerId
+ORDER BY c.first_name]]></SQLQuery>
+  <ViewAttribute
+    Name="EmployeeId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.math.BigDecimal"
+    ColumnType="INTEGER"
+    AliasName="EMPLOYEE_ID"
+    Expression="EMPLOYEE_ID"
+    SQLType="BFILE"/>
+  <ViewAttribute
+    Name="FirstName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="20"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="FIRST_NAME"
+    Expression="FIRST_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ManagerId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="6"
+    Scale="0"
+    Type="java.math.BigDecimal"
+    ColumnType="NUMBER"
+    AliasName="MANAGER_ID"
+    Expression="MANAGER_ID"
+    SQLType="INTEGER"/>
+  <ViewAttribute
+    Name="ManagerName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="20"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="MANAGER_NAME"
+    Expression="MANAGER_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ForemanagerId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="6"
+    Scale="0"
+    Type="java.math.BigDecimal"
+    ColumnType="NUMBER"
+    AliasName="FOREMANAGER_ID"
+    Expression="FOREMANAGER_ID"
+    SQLType="INTEGER"/>
+  <ViewAttribute
+    Name="ForemanagerName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="20"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="FOREMANAGER_NAME"
+    Expression="FOREMANAGER_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="HasChildren"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="1"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="HAS_CHILDREN"
+    Expression="HAS_CHILDREN"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </ViewAttribute>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="EmployeeId"/>
+  </AttrArray>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="rectreenav.bc.RecursiveTreeNavigtionBCBundle"/>
+  </ResourceBundle>
+</ViewObject>

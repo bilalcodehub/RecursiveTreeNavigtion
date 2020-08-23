@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE JboProject SYSTEM "jbo_03_01.dtd">
+<!---->
+<JboProject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="RecursiveTreeNavigtionBC"
+  Version="12.2.1.9.14"
+  SeparateXMLFiles="true"
+  PackageName="rectreenav.bc">
+  <DesignTime>
+    <Attr Name="_DTExpressionTypeChecking" Value="true"/>
+    <Attr Name="_jbo.TypeMapEntries" Value="OracleApps"/>
+    <Attr Name="_jprName" Value="../../../RecursiveTreeNavigtionBC.jpr"/>
+    <Attr Name="_NamedConnection" Value="HRConn"/>
+    <Attr Name="_appModuleNames0" Value="rectreenav.bc.services.HRAM"/>
+  </DesignTime>
+  <Containee
+    Name="services"
+    PackageName="rectreenav.bc.services"
+    ObjectType="JboPackage">
+    <DesignTime>
+      <Attr Name="_AM" Value="true"/>
+    </DesignTime>
+  </Containee>
+  <Containee
+    Name="uiviews"
+    PackageName="rectreenav.bc.uiviews"
+    ObjectType="JboPackage">
+    <DesignTime>
+      <Attr Name="_VO" Value="true"/>
+    </DesignTime>
+  </Containee>
+</JboProject>

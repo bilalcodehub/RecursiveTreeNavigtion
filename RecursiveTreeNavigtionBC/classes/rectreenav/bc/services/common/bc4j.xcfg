@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!---->
+<BC4JConfig xmlns="http://xmlns.oracle.com/bc4j/configuration" version="11.1">
+  <AppModuleConfigBag ApplicationName="rectreenav.bc.services.HRAM">
+    <AppModuleConfig name="HRAMLocal" jbo.project="rectreenav.bc.RecursiveTreeNavigtionBC"
+                     ApplicationName="rectreenav.bc.services.HRAM" DeployPlatform="LOCAL">
+      <Database jbo.TypeMapEntries="OracleApps" JDBCDataSource="java:comp/env/jdbc/HRConnDS"/>
+      <Security AppModuleJndiName="rectreenav.bc.services.HRAM"/>
+    </AppModuleConfig>
+    <AppModuleConfig name="HRAMShared" jbo.project="rectreenav.bc.RecursiveTreeNavigtionBC"
+                     ApplicationName="rectreenav.bc.services.HRAM" DeployPlatform="LOCAL">
+      <AM-Pooling jbo.ampool.maxpoolsize="1" jbo.ampool.isuseexclusive="false"/>
+      <Database jbo.TypeMapEntries="OracleApps" JDBCDataSource="java:comp/env/jdbc/HRConnDS"/>
+      <Security AppModuleJndiName="rectreenav.bc.services.HRAM"/>
+    </AppModuleConfig>
+  </AppModuleConfigBag>
+</BC4JConfig>
